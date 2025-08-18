@@ -14,9 +14,10 @@ const FraudDetection = ({ contract, provider, userList, onBlacklist, account, is
   const [searchAddress, setSearchAddress] = useState('');
   const [connectionStatus, setConnectionStatus] = useState('unknown');
 
-  // Enhanced API configuration with fallbacks
-  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:3001/api';
-  const FALLBACK_API_URL = 'http://127.0.0.1:3001/api';
+ // Enhanced API configuration with fallbacks
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://defiapps-production.up.railway.app/api';
+const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
+
 
   useEffect(() => {
     initializeComponent();
@@ -757,5 +758,6 @@ const removeFromBlacklist = async (address) => {
     </div>
   );
 };
+
 
 export default FraudDetection;
