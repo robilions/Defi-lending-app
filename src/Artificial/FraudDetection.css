@@ -1,0 +1,705 @@
+/* Enhanced FraudDetection Styles */
+.fraud-detection-container {
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  color: white;
+}
+
+.fraud-header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.fraud-title {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.fraud-subtitle {
+  text-align: center;
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+}
+
+/* Connection Status Indicators */
+.connection-status, .contract-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.status-connected {
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.status-analyzing {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.status-disconnected {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-error {
+  background: rgba(245, 101, 101, 0.2);
+  border: 1px solid rgba(245, 101, 101, 0.3);
+}
+
+.status-unknown {
+  background: rgba(251, 191, 36, 0.2);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.contract-address {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Controls */
+.fraud-controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+.action-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.fraud-analyze-btn {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.fraud-analyze-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+}
+
+.toggle-btn {
+  background: linear-gradient(135deg, #4834d4, #686de0);
+  color: white;
+}
+
+.health-check-btn, .refresh-btn {
+  background: linear-gradient(135deg, #00d2d3, #54a0ff);
+  color: white;
+}
+
+.action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Spinner Animation */
+.spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.analyzing-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Dashboard */
+.fraud-dashboard {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+}
+
+.stat-content h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.stat-description {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* Filters */
+.fraud-filters {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.filter-select, .filter-input {
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  backdrop-filter: blur(5px);
+}
+
+.filter-select option {
+  background: #2c3e50;
+  color: white;
+}
+
+.filter-stats {
+  margin-left: auto;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Table Styles */
+.table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.fraud-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.fraud-table th {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.fraud-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Risk Level Styling */
+.critical-bg {
+  background: rgba(220, 38, 38, 0.2) !important;
+}
+
+.high-bg {
+  background: rgba(245, 101, 101, 0.2) !important;
+}
+
+.medium-bg {
+  background: rgba(251, 191, 36, 0.2) !important;
+}
+
+.low-bg {
+  background: rgba(34, 197, 94, 0.2) !important;
+}
+
+.risk-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.critical-risk {
+  color: #fca5a5;
+}
+
+.high-risk {
+  color: #f87171;
+}
+
+.medium-risk {
+  color: #fbbf24;
+}
+
+.low-risk {
+  color: #34d399;
+}
+
+/* Address Cell */
+.address-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.address-text {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.copy-btn:hover {
+  opacity: 1;
+}
+
+/* Action Buttons */
+.small {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+}
+
+.block-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+}
+
+.unblock-btn {
+  background: linear-gradient(135deg, #27ae60, #229954);
+  color: white;
+}
+
+.block-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #c0392b, #a93226);
+}
+
+.unblock-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #229954, #1e8449);
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-badge.blacklisted {
+  background: rgba(220, 38, 38, 0.3);
+  color: #fca5a5;
+}
+
+.status-badge.active {
+  background: rgba(34, 197, 94, 0.3);
+  color: #86efac;
+}
+
+/* Manual Blacklist Section */
+.manual-blacklist-section {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-top: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.manual-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.add-address-form {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.form-input {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  backdrop-filter: blur(5px);
+}
+
+.form-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.address-input {
+  font-family: 'Courier New', monospace;
+}
+
+.add-blacklist-btn {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  white-space: nowrap;
+}
+
+.blacklist-display h4 {
+  margin-bottom: 1rem;
+  color: #fca5a5;
+}
+
+.blacklist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.blacklist-item {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.blacklist-address {
+  font-family: 'Courier New', monospace;
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.remove-btn {
+  background: linear-gradient(135deg, #27ae60, #229954);
+  color: white;
+}
+
+/* Permission Notice */
+.permission-notice {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.notice-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.notice-icon {
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+}
+
+.notice-content p {
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.loading-spinner {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 3rem;
+  border-radius: 15px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.spinner-large {
+  width: 3rem;
+  height: 3rem;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+  margin: 0 auto 1rem;
+}
+
+.loading-spinner p {
+  margin: 0.5rem 0;
+  font-weight: 600;
+}
+
+.loading-sub {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* No Data State */
+.no-data {
+  text-align: center;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.no-data-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.no-data p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.no-data-sub {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+.clear-filters-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  margin-top: 1rem;
+}
+
+/* Pattern Charts */
+.patterns-section {
+  margin-top: 2rem;
+}
+
+.patterns-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.pattern-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pattern-card h4 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.pattern-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.chart-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.chart-label {
+  min-width: 80px;
+  font-weight: 600;
+}
+
+.chart-bar-container {
+  flex: 1;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.chart-bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+.night-hours {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+}
+
+.loan-type {
+  background: linear-gradient(135deg, #feca57, #ff9ff3);
+}
+
+.chart-value {
+  min-width: 40px;
+  text-align: right;
+  font-weight: 600;
+}
+
+.pattern-insights {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.pattern-insights p {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+/* Connection Help */
+.connection-help {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.help-content h4 {
+  margin-bottom: 0.5rem;
+  color: #fca5a5;
+}
+
+.help-commands {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin: 0.5rem 0;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .fraud-detection-container {
+    padding: 1rem;
+  }
+  
+  .fraud-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .fraud-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  
+  .filter-stats {
+    margin-left: 0;
+    text-align: center;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .patterns-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .add-address-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .blacklist-grid {
+    grid-template-columns: 1fr;
+  }
+}
