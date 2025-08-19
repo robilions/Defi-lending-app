@@ -448,13 +448,7 @@ const removeFromBlacklist = async (address) => {
               🔍 Check Backend
             </button>
             
-            <button
-              onClick={loadBlacklistedAddressesFromContract}
-              className="action-btn refresh-btn"
-              disabled={!contract || loading}
-            >
-              🔄 Refresh Blacklist
-            </button>
+           
           </div>
           
           {lastAnalysis && (
@@ -761,3 +755,4 @@ const removeFromBlacklist = async (address) => {
 
 
 export default FraudDetection;
+
