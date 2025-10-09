@@ -69,6 +69,8 @@ function App() {
   const [allowanceResult, setAllowanceResult] = useState('0');
   const [blacklistAddress, setBlacklistAddress] = useState('');
   const [unblacklistAddress, setUnblacklistAddress] = useState('');
+  const [showLanding, setShowLanding] = useState(true);
+
 
   
 useEffect(() => {
@@ -129,7 +131,7 @@ useEffect(() => {
     // Check if on Sepolia network
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
     if (chainId !== '0xaa36a7') {
-      const switchToSepolia = confirm('Please switch to Sepolia testnet to continue. Click OK to switch automatically.');
+      const switchToSepolia = window.confirm('Please switch to Sepolia testnet to continue. Click OK to switch automatically.');
       if (switchToSepolia) {
         try {
           await window.ethereum.request({
@@ -169,6 +171,8 @@ useEffect(() => {
     setSigner(signer);
     setAccount(address);
     setShowLanding(false); // Hide landing page after connect
+
+
     
     // Initialize contract
     const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI, signer);
