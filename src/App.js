@@ -93,12 +93,6 @@ useEffect(() => {
       if (window.ethereum) {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         setProvider(provider);
-        
-        // Check if already connected
-        const accounts = await provider.listAccounts();
-        if (accounts.length > 0) {
-          await connectWallet();
-        }
       }
     };
     
