@@ -794,7 +794,9 @@ const unblacklistAddr = async () => {
             <button onClick={connectWallet} className="connect-btn">
               Connect Wallet
             </button>
-            <p className="connect-text">Connect your MetaMask wallet to get started</p>
+            <p className="connect-text">
+              Connect your MetaMask wallet to get started
+            </p>
           </div>
         ) : (
           <div className="main-content">
@@ -802,11 +804,16 @@ const unblacklistAddr = async () => {
             <div className="account-info">
               <div className="account-card">
                 <h3>Account Information</h3>
-                <p><strong>Address:</strong> {account}</p>
-                <p><strong>Balance:</strong> {balance} LTK</p>
-                <p><strong>Status:</strong> 
-                  {isOwner ? ' Owner' : ''}
-                  {isBlacklisted ? ' Blacklisted' : ' Active'}
+                <p>
+                  <strong>Address:</strong> {account}
+                </p>
+                <p>
+                  <strong>Balance:</strong> {balance} LTK
+                </p>
+                <p>
+                  <strong>Status:</strong>
+                  {isOwner ? " Owner" : ""}
+                  {isBlacklisted ? " Blacklisted" : " Active"}
                 </p>
                 <button onClick={disconnect} className="disconnect-btn">
                   Disconnect
