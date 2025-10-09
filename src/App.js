@@ -1076,16 +1076,21 @@ const unblacklistAddr = async () => {
         </div>
         <div className="user-stat-card">
           <span className="stat-label">Active Loans:</span>
-          <span className="stat-value">{userList.filter(user => user.isActive).length}</span>
+          <span className="stat-value">
+            {userList.filter((user) => user.isActive).length}
+          </span>
         </div>
         <div className="user-stat-card">
           <span className="stat-label">Total Balances:</span>
           <span className="stat-value">
-            {userList.reduce((sum, user) => sum + parseFloat(user.balance || 0), 0).toFixed(2)} LTK
+            {userList
+              .reduce((sum, user) => sum + parseFloat(user.balance || 0), 0)
+              .toFixed(2)}{" "}
+            LTK
           </span>
         </div>
       </div>
-      
+
       <table className="user-table">
         <thead>
           <tr>
@@ -1103,7 +1108,9 @@ const unblacklistAddr = async () => {
                 <div className="no-data-message">
                   <span className="no-data-icon">📊</span>
                   <p>No user data available</p>
-                  <p className="no-data-sub">Users will appear here after transactions</p>
+                  <p className="no-data-sub">
+                    Users will appear here after transactions
+                  </p>
                 </div>
               </td>
             </tr>
@@ -1116,9 +1123,10 @@ const unblacklistAddr = async () => {
                   <td className="user-address">
                     <div className="address-container">
                       <span className="address-text">
-                        {user.address.substring(0, 10)}...{user.address.substring(user.address.length - 8)}
+                        {user.address.substring(0, 10)}...
+                        {user.address.substring(user.address.length - 8)}
                       </span>
-                      <button 
+                      <button
                         className="copy-btn"
                         onClick={() => copyToClipboard(user.address)}
                         title="Copy full address"
@@ -1128,16 +1136,30 @@ const unblacklistAddr = async () => {
                     </div>
                   </td>
                   <td className="user-balance">
-                    <span className={`balance-amount ${parseFloat(user.balance) > 1000 ? 'high-balance' : ''}`}>
+                    <span
+                      className={`balance-amount ${
+                        parseFloat(user.balance) > 1000 ? "high-balance" : ""
+                      }`}
+                    >
                       {parseFloat(user.balance).toFixed(2)}
                     </span>
                   </td>
                   <td className="loan-status">
                     {user.isActive ? (
                       <div className="loan-info">
-                        <span className="loan-amount">{parseFloat(user.loanAmount).toFixed(2)} LTK</span>
-                        <span className={`loan-badge ${isLoanOverdueForUser(user) ? 'overdue' : 'active'}`}>
-                          {isLoanOverdueForUser(user) ? '⚠️ Overdue' : '✅ Active'}
+                        <span className="loan-amount">
+                          {parseFloat(user.loanAmount).toFixed(2)} LTK
+                        </span>
+                        <span
+                          className={`loan-badge ${
+                            isLoanOverdueForUser(user)
+                              ? "overdue"
+                              : "active"
+                          }`}
+                        >
+                          {isLoanOverdueForUser(user)
+                            ? "⚠️ Overdue"
+                            : "✅ Active"}
                         </span>
                       </div>
                     ) : (
@@ -1146,7 +1168,13 @@ const unblacklistAddr = async () => {
                   </td>
                   <td className="due-date">
                     {user.isActive ? (
-                      <span className={isLoanOverdueForUser(user) ? 'overdue-date' : 'due-date-normal'}>
+                      <span
+                        className={
+                          isLoanOverdueForUser(user)
+                            ? "overdue-date"
+                            : "due-date-normal"
+                        }
+                      >
                         {formatTimestamp(user.dueDate)}
                       </span>
                     ) : (
@@ -1162,7 +1190,7 @@ const unblacklistAddr = async () => {
     </div>
 
     {/* Enhanced Fraud Detection Component */}
-    <FraudDetection 
+    <FraudDetection
       contract={contract}
       provider={provider}
       userList={userList}
@@ -1174,72 +1202,72 @@ const unblacklistAddr = async () => {
   </div>
 )}
 
-            {/* Activity Log */}
-            <div className="activity-section">
-              <h3>Activity Log</h3>
-              <div className="activity-log">
-                {activities.length === 0 ? (
-                  <p className="no-activities">No activities found</p>
-                ) : (
-                  activities.map((activity, index) => (
-                    <div key={index} className="activity-item">
-                      <div className="activity-type">{activity.type}</div>
-                      <div className="activity-details">
-                        {activity.type === 'Transfer' && (
-                          <p>
-                            From: {activity.from} <br />
-                            To: {activity.to} <br />
-                            Amount: {activity.amount} LTK
-                          </p>
-                        )}
-                        {activity.type === 'Mint' && (
-                          <p>
-                            To: {activity.to} <br />
-                            Amount: {activity.amount} LTK
-                          </p>
-                        )}
-                        {activity.type === 'Burn' && (
-                          <p>
-                            From: {activity.from} <br />
-                            Amount: {activity.amount} LTK
-                          </p>
-                        )}
-                        {activity.type === 'Loan Taken' && (
-                          <p>
-                            Borrower: {activity.borrower} <br />
-                            Amount: {activity.amount} LTK <br />
-                            Due: {formatTimestamp(activity.dueDate)}
-                          </p>
-                        )}
-                        {activity.type === 'Loan Repaid' && (
-                          <p>
-                            Borrower: {activity.borrower} <br />
-                            Amount: {activity.amount} LTK
-                          </p>
-                        )}
-                      </div>
-                      <div className="activity-time">
-                        {formatTimestamp(activity.timestamp)}
-                      </div>
-                      <div className="activity-hash">
-                        <a 
-                          href={`https://sepolia.etherscan.io/tx/${activity.hash}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          View on Etherscan
-                        </a>
-                      </div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
+{/* Activity Log */}
+<div className="activity-section">
+  <h3>Activity Log</h3>
+  <div className="activity-log">
+    {activities.length === 0 ? (
+      <p className="no-activities">No activities found</p>
+    ) : (
+      activities.map((activity, index) => (
+        <div key={index} className="activity-item">
+          <div className="activity-type">{activity.type}</div>
+          <div className="activity-details">
+            {activity.type === "Transfer" && (
+              <p>
+                From: {activity.from} <br />
+                To: {activity.to} <br />
+                Amount: {activity.amount} LTK
+              </p>
+            )}
+            {activity.type === "Mint" && (
+              <p>
+                To: {activity.to} <br />
+                Amount: {activity.amount} LTK
+              </p>
+            )}
+            {activity.type === "Burn" && (
+              <p>
+                From: {activity.from} <br />
+                Amount: {activity.amount} LTK
+              </p>
+            )}
+            {activity.type === "Loan Taken" && (
+              <p>
+                Borrower: {activity.borrower} <br />
+                Amount: {activity.amount} LTK <br />
+                Due: {formatTimestamp(activity.dueDate)}
+              </p>
+            )}
+            {activity.type === "Loan Repaid" && (
+              <p>
+                Borrower: {activity.borrower} <br />
+                Amount: {activity.amount} LTK
+              </p>
+            )}
           </div>
-        )}
-      </div>
-    </div>
-  );
-}
+          <div className="activity-time">
+            {formatTimestamp(activity.timestamp)}
+          </div>
+          <div className="activity-hash">
+            <a
+              href={`https://sepolia.etherscan.io/tx/${activity.hash}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View on Etherscan
+            </a>
+          </div>
+        </div>
+      ))
+    )}
+  </div>
+</div>
+</div>
+</div>
+</div>
+);
+
+
 
 export default App;
