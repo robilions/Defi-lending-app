@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import FraudDetection from './Artificial/FraudDetection';
+import LandingPage from './LandingPage';
+
 import './App.css';
 
 // Contract ABI
@@ -116,36 +118,71 @@ useEffect(() => {
 
   // Connect wallet
   const connectWallet = async () => {
-    try {
-      if (!window.ethereum) {
-        alert('MetaMask is required!');
+  try {
+    if (!window.ethereum) {
+      alert('MetaMask is required!');
+      return;
+    }
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    
+    // Check if on Sepolia network
+    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+    if (chainId !== '0xaa36a7') {
+      const switchToSepolia = confirm('Please switch to Sepolia testnet to continue. Click OK to switch automatically.');
+      if (switchToSepolia) {
+        try {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0xaa36a7' }]
+          });
+        } catch (switchError) {
+          if (switchError.code === 4902) {
+            // Network not added, add it
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [{
+                chainId: '0xaa36a7',
+                chainName: 'Sepolia Testnet',
+                nativeCurrency: {
+                  name: 'Sepolia ETH',
+                  symbol: 'SEP',
+                  decimals: 18
+                },
+                rpcUrls: ['https://sepolia.infura.io/v3/'],
+                blockExplorerUrls: ['https://sepolia.etherscan.io/']
+              }]
+            });
+          }
+        }
+      } else {
         return;
       }
-
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      await provider.send('eth_requestAccounts', []);
-      
-      const signer = provider.getSigner();
-      const address = await signer.getAddress();
-      
-      setProvider(provider);
-      setSigner(signer);
-      setAccount(address);
-      
-      // Initialize contract
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI, signer);
-      setContract(contract);
-      
-      // Load initial data
-      await loadUserData(contract, address);
-      await loadUsersData();
-      
-      
-    } catch (error) {
-      console.error('Error connecting wallet:', error);
-      alert('Error connecting wallet: ' + error.message);
     }
-  };
+    
+    await provider.send('eth_requestAccounts', []);
+    
+    const signer = provider.getSigner();
+    const address = await signer.getAddress();
+    
+    setProvider(provider);
+    setSigner(signer);
+    setAccount(address);
+    setShowLanding(false); // Hide landing page after connect
+    
+    // Initialize contract
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI, signer);
+    setContract(contract);
+    
+    // Load initial data
+    await loadUserData(contract, address);
+    await loadUsersData();
+    
+  } catch (error) {
+    console.error('Error connecting wallet:', error);
+    alert('Error connecting wallet: ' + error.message);
+  }
+};
 
   // Disconnect wallet
   const disconnect = () => {
@@ -740,7 +777,12 @@ const unblacklistAddr = async () => {
   };
 
   return (
-    <div className="app">
+  <div className="app">
+    {showLanding && !account ? (
+      // Show Landing Page when not connected
+      <LandingPage onConnect={connectWallet} />
+    ) : (
+      // Show Main App when connected
       <div className="container">
         <header className="header">
           <h1>🏦 Lending DApp</h1>
