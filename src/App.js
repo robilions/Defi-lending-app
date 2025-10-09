@@ -776,9 +776,9 @@ const unblacklistAddr = async () => {
     return loanInfo.isActive && Date.now() / 1000 > loanInfo.dueDate;
   };
 
-  return (
-  <div className="app">
-    {showLanding && !account ? (
+    return (
+    <div className="app">
+      {showLanding && !account ? (
       // Show Landing Page when not connected
       <LandingPage onConnect={connectWallet} />
     ) : (
@@ -794,26 +794,19 @@ const unblacklistAddr = async () => {
             <button onClick={connectWallet} className="connect-btn">
               Connect Wallet
             </button>
-            <p className="connect-text">
-              Connect your MetaMask wallet to get started
-            </p>
+            <p className="connect-text">Connect your MetaMask wallet to get started</p>
           </div>
-        ) : (
+          ) : (
           <div className="main-content">
             {/* Account Info */}
             <div className="account-info">
               <div className="account-card">
                 <h3>Account Information</h3>
-                <p>
-                  <strong>Address:</strong> {account}
-                </p>
-                <p>
-                  <strong>Balance:</strong> {balance} LTK
-                </p>
-                <p>
-                  <strong>Status:</strong>
-                  {isOwner ? " Owner" : ""}
-                  {isBlacklisted ? " Blacklisted" : " Active"}
+                <p><strong>Address:</strong> {account}</p>
+                <p><strong>Balance:</strong> {balance} LTK</p>
+                <p><strong>Status:</strong> 
+                  {isOwner ? ' Owner' : ''}
+                  {isBlacklisted ? ' Blacklisted' : ' Active'}
                 </p>
                 <button onClick={disconnect} className="disconnect-btn">
                   Disconnect
@@ -1066,208 +1059,180 @@ const unblacklistAddr = async () => {
             </div>
 
             {isOwner && (
-  <div className="fraud-detection-wrapper">
-    <div className="userlist-section">
-      <h3>📄 Connected Users Overview</h3>
-      <div className="user-stats">
-        <div className="user-stat-card">
-          <span className="stat-label">Total Users:</span>
-          <span className="stat-value">{userList.length}</span>
-        </div>
-        <div className="user-stat-card">
-          <span className="stat-label">Active Loans:</span>
-          <span className="stat-value">
-            {userList.filter((user) => user.isActive).length}
-          </span>
-        </div>
-        <div className="user-stat-card">
-          <span className="stat-label">Total Balances:</span>
-          <span className="stat-value">
-            {userList
-              .reduce((sum, user) => sum + parseFloat(user.balance || 0), 0)
-              .toFixed(2)}{" "}
-            LTK
-          </span>
-        </div>
-      </div>
-
-      <table className="user-table">
-        <thead>
-          <tr>
-            <th>No.</th>
-            <th>Address</th>
-            <th>Balance (LTK)</th>
-            <th>Loan Status</th>
-            <th>Due Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {userList.length === 0 ? (
-            <tr>
-              <td colSpan="6" className="no-data-cell">
-                <div className="no-data-message">
-                  <span className="no-data-icon">📊</span>
-                  <p>No user data available</p>
-                  <p className="no-data-sub">
-                    Users will appear here after transactions
-                  </p>
+              <div className="fraud-detection-wrapper">
+              <div className="userlist-section">
+                <h3>📄 Connected Users Overview</h3>
+                <div className="user-stats">
+                  <div className="user-stat-card">
+                    <span className="stat-label">Total Users:</span>
+                    <span className="stat-value">{userList.length}</span>
+                  </div>
+                  <div className="user-stat-card">
+                    <span className="stat-label">Active Loans:</span>
+                    <span className="stat-value">{userList.filter(user => user.isActive).length}</span>
+                  </div>
+                  <div className="user-stat-card">
+                    <span className="stat-label">Total Balances:</span>
+                    <span className="stat-value">
+                      {userList.reduce((sum, user) => sum + parseFloat(user.balance || 0), 0).toFixed(2)} LTK
+                    </span>
+                  </div>
                 </div>
-              </td>
-            </tr>
-          ) : (
-            userList.map((user, idx) => {
-              const riskLevel = getRiskLevelForUser(user);
-              return (
-                <tr key={idx} className={`user-row ${riskLevel.className}`}>
-                  <td className="user-number">{idx + 1}</td>
-                  <td className="user-address">
-                    <div className="address-container">
-                      <span className="address-text">
-                        {user.address.substring(0, 10)}...
-                        {user.address.substring(user.address.length - 8)}
-                      </span>
-                      <button
-                        className="copy-btn"
-                        onClick={() => copyToClipboard(user.address)}
-                        title="Copy full address"
-                      >
-                        📋
-                      </button>
+                
+                <table className="user-table">
+                  <thead>
+                  <tr>
+                <th>No.</th>
+                <th>Address</th>
+                <th>Balance (LTK)</th>
+                <th>Loan Status</th>
+                <th>Due Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {userList.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className="no-data-cell">
+                    <div className="no-data-message">
+                      <span className="no-data-icon">📊</span>
+                      <p>No user data available</p>
+                      <p className="no-data-sub">Users will appear here after transactions</p>
                     </div>
                   </td>
-                  <td className="user-balance">
-                    <span
-                      className={`balance-amount ${
-                        parseFloat(user.balance) > 1000 ? "high-balance" : ""
-                      }`}
-                    >
-                      {parseFloat(user.balance).toFixed(2)}
-                    </span>
-                  </td>
-                  <td className="loan-status">
-                    {user.isActive ? (
-                      <div className="loan-info">
-                        <span className="loan-amount">
-                          {parseFloat(user.loanAmount).toFixed(2)} LTK
+                </tr>
+              ) : (
+                userList.map((user, idx) => {
+                  const riskLevel = getRiskLevelForUser(user);
+                  return (
+                    <tr key={idx} className={`user-row ${riskLevel.className}`}>
+                      <td className="user-number">{idx + 1}</td>
+                      <td className="user-address">
+                        <div className="address-container">
+                          <span className="address-text">
+                            {user.address.substring(0, 10)}...{user.address.substring(user.address.length - 8)}
+                          </span>
+                          <button 
+                            className="copy-btn"
+                            onClick={() => copyToClipboard(user.address)}
+                            title="Copy full address"
+                          >
+                            📋
+                          </button>
+                        </div>
+                      </td>
+                      <td className="user-balance">
+                        <span className={`balance-amount ${parseFloat(user.balance) > 1000 ? 'high-balance' : ''}`}>
+                          {parseFloat(user.balance).toFixed(2)}
                         </span>
-                        <span
-                          className={`loan-badge ${
-                            isLoanOverdueForUser(user)
-                              ? "overdue"
-                              : "active"
-                          }`}
-                        >
-                          {isLoanOverdueForUser(user)
-                            ? "⚠️ Overdue"
-                            : "✅ Active"}
-                        </span>
-                      </div>
-                    ) : (
-                      <span className="no-loan">No active loan</span>
-                    )}
-                  </td>
-                  <td className="due-date">
-                    {user.isActive ? (
-                      <span
-                        className={
-                          isLoanOverdueForUser(user)
-                            ? "overdue-date"
-                            : "due-date-normal"
-                        }
-                      >
-                        {formatTimestamp(user.dueDate)}
-                      </span>
-                    ) : (
-                      <span className="no-date">-</span>
-                    )}
+                      </td>
+                      <td className="loan-status">
+                        {user.isActive ? (
+                          <div className="loan-info">
+                            <span className="loan-amount">{parseFloat(user.loanAmount).toFixed(2)} LTK</span>
+                            <span className={`loan-badge ${isLoanOverdueForUser(user) ? 'overdue' : 'active'}`}>
+                              {isLoanOverdueForUser(user) ? '⚠️ Overdue' : '✅ Active'}
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="no-loan">No active loan</span>
+                        )}
+                      </td>
+                      <td className="due-date">
+                        {user.isActive ? (
+                          <span className={isLoanOverdueForUser(user) ? 'overdue-date' : 'due-date-normal'}>
+                            {formatTimestamp(user.dueDate)}
+                          </span>
+                        ) : (
+                          <span className="no-date">-</span>
+                        )}
                   </td>
                 </tr>
               );
             })
           )}
-        </tbody>
-      </table>
-    </div>
+                  </tbody>
+                </table>
+              </div>
 
-    {/* Enhanced Fraud Detection Component */}
-    <FraudDetection
-      contract={contract}
-      provider={provider}
-      userList={userList}
-      onBlacklist={blacklistAddr}
-      account={account}
-      isOwner={isOwner}
-      onUserListUpdate={loadUsersData}
-    />
-  </div>
-)}
+              {/* Enhanced Fraud Detection Component */}
+              <FraudDetection 
+                contract={contract}
+                provider={provider}
+                userList={userList}
+                onBlacklist={blacklistAddr}
+                account={account}
+                isOwner={isOwner}
+                onUserListUpdate={loadUsersData}
+              />
+              </div>
+              )}
 
-{/* Activity Log */}
-<div className="activity-section">
-  <h3>Activity Log</h3>
-  <div className="activity-log">
-    {activities.length === 0 ? (
-      <p className="no-activities">No activities found</p>
-    ) : (
-      activities.map((activity, index) => (
-        <div key={index} className="activity-item">
-          <div className="activity-type">{activity.type}</div>
-          <div className="activity-details">
-            {activity.type === "Transfer" && (
-              <p>
-                From: {activity.from} <br />
-                To: {activity.to} <br />
-                Amount: {activity.amount} LTK
-              </p>
-            )}
-            {activity.type === "Mint" && (
-              <p>
-                To: {activity.to} <br />
-                Amount: {activity.amount} LTK
-              </p>
-            )}
-            {activity.type === "Burn" && (
-              <p>
-                From: {activity.from} <br />
-                Amount: {activity.amount} LTK
-              </p>
-            )}
-            {activity.type === "Loan Taken" && (
-              <p>
-                Borrower: {activity.borrower} <br />
-                Amount: {activity.amount} LTK <br />
-                Due: {formatTimestamp(activity.dueDate)}
-              </p>
-            )}
-            {activity.type === "Loan Repaid" && (
-              <p>
-                Borrower: {activity.borrower} <br />
-                Amount: {activity.amount} LTK
-              </p>
-            )}
+            {/* Activity Log */}
+            <div className="activity-section">
+              <h3>Activity Log</h3>
+              <div className="activity-log">
+                {activities.length === 0 ? (
+                  <p className="no-activities">No activities found</p>
+                ) : (
+                  activities.map((activity, index) => (
+                    <div key={index} className="activity-item">
+                      <div className="activity-type">{activity.type}</div>
+                      <div className="activity-details">
+                        {activity.type === 'Transfer' && (
+                          <p>
+                            From: {activity.from} <br />
+                            To: {activity.to} <br />
+                            Amount: {activity.amount} LTK
+                          </p>
+                        )}
+                        {activity.type === 'Mint' && (
+                          <p>
+                            To: {activity.to} <br />
+                            Amount: {activity.amount} LTK
+                          </p>
+                        )}
+                        {activity.type === 'Burn' && (
+                          <p>
+                            From: {activity.from} <br />
+                            Amount: {activity.amount} LTK
+                          </p>
+                        )}
+                        {activity.type === 'Loan Taken' && (
+                          <p>
+                            Borrower: {activity.borrower} <br />
+                            Amount: {activity.amount} LTK <br />
+                            Due: {formatTimestamp(activity.dueDate)}
+                          </p>
+                        )}
+                        {activity.type === 'Loan Repaid' && (
+                          <p>
+                            Borrower: {activity.borrower} <br />
+                            Amount: {activity.amount} LTK
+                          </p>
+                        )}
+                      </div>
+                      <div className="activity-time">
+                        {formatTimestamp(activity.timestamp)}
+                      </div>
+                      <div className="activity-hash">
+                        <a 
+                          href={`https://sepolia.etherscan.io/tx/${activity.hash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          View on Etherscan
+                        </a>
+                      </div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
           </div>
-          <div className="activity-time">
-            {formatTimestamp(activity.timestamp)}
-          </div>
-          <div className="activity-hash">
-            <a
-              href={`https://sepolia.etherscan.io/tx/${activity.hash}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View on Etherscan
-            </a>
-          </div>
-        </div>
-      ))
+        )}
+      </div>
     )}
-  </div>
-</div>
-</div>
-</div>
-</div>
-);
-
-
-
+    </div>
+  );
+}
 export default App;
