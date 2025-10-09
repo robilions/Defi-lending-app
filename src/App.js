@@ -199,6 +199,8 @@ useEffect(() => {
     setIsBlacklisted(false);
     setLoanInfo({ amount: '0', dueDate: 0, isActive: false });
     setActivities([]);
+    setShowLanding(true);
+
   };
 
   // Load user data
