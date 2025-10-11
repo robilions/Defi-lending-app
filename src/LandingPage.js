@@ -238,6 +238,12 @@ const LandingPage = ({ onConnect }) => {
         </div>
       </section>
 
+      {/* Copyright Section */}
+      <footer className="copyright">
+        <p className="copyright-text">© 2025 All Rights Reserved</p>
+        <p className="copyright-name">Rofif Nabil</p>
+      </footer>
+
       <style jsx>{`
         .landing-page {
           min-height: 100vh;
@@ -529,17 +535,20 @@ const LandingPage = ({ onConnect }) => {
 
         .stats {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 35px;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
           margin: 60px 50px;
-          padding-bottom: 80px;
+          padding-bottom: 40px;
           text-align: center;
           position: relative;
           z-index: 1;
+          max-width: 900px;
+          margin-left: auto;
+          margin-right: auto;
         }
 
         .stat {
-          padding: 25px;
+          padding: 20px 15px;
           background: rgba(255, 255, 255, 0.05);
           backdrop-filter: blur(20px);
           border-radius: 15px;
@@ -554,22 +563,45 @@ const LandingPage = ({ onConnect }) => {
         }
 
         .stat-number {
-          font-size: 2.8rem;
+          font-size: 2.2rem;
           font-weight: 900;
           background: linear-gradient(135deg, #00ffff, #ff00ff);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
           display: block;
-          margin-bottom: 10px;
+          margin-bottom: 8px;
         }
 
         .stat-label {
           color: rgba(255, 255, 255, 0.7);
-          font-size: 0.95rem;
+          font-size: 0.85rem;
           text-transform: uppercase;
-          letter-spacing: 1px;
+          letter-spacing: 0.5px;
           font-weight: 600;
+          line-height: 1.3;
+        }
+
+        .copyright {
+          text-align: center;
+          padding: 30px 20px;
+          background: rgba(0, 0, 0, 0.3);
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          position: relative;
+          z-index: 1;
+        }
+
+        .copyright-text {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 0.9rem;
+          margin-bottom: 8px;
+        }
+
+        .copyright-name {
+          color: #00ffff;
+          font-weight: 700;
+          font-size: 1.1rem;
+          text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
         }
 
         @media (max-width: 768px) {
@@ -582,7 +614,7 @@ const LandingPage = ({ onConnect }) => {
           }
 
           .hero-subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
           }
 
           .connect-wallet-btn {
@@ -607,8 +639,52 @@ const LandingPage = ({ onConnect }) => {
 
           .stats {
             grid-template-columns: repeat(2, 1fr);
-            margin: 40px 25px;
-            gap: 20px;
+            margin: 40px 20px;
+            gap: 15px;
+            padding-bottom: 40px;
+          }
+
+          .stat {
+            padding: 18px 12px;
+          }
+
+          .stat-number {
+            font-size: 1.8rem;
+          }
+
+          .stat-label {
+            font-size: 0.75rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-title {
+            font-size: 1.8rem;
+          }
+
+          .stats {
+            gap: 12px;
+            margin: 30px 15px;
+          }
+
+          .stat {
+            padding: 15px 10px;
+          }
+
+          .stat-number {
+            font-size: 1.5rem;
+          }
+
+          .stat-label {
+            font-size: 0.7rem;
+          }
+
+          .copyright-text {
+            font-size: 0.8rem;
+          }
+
+          .copyright-name {
+            font-size: 1rem;
           }
         }
       `}</style>
