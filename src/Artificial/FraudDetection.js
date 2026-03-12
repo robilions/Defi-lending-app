@@ -14,9 +14,9 @@ const FraudDetection = ({ contract, provider, userList, onBlacklist, account, is
   const [searchAddress, setSearchAddress] = useState('');
   const [connectionStatus, setConnectionStatus] = useState('unknown');
 
- // Enhanced API configuration with fallbacks
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://defiapps-production.up.railway.app/api';
-const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
+  // Enhanced API configuration with fallbacks
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://defiapps-production.up.railway.app/api';
+  const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
 
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
     if (!contract || !userList) return;
     
     try {
-      console.log('🔍 Loading blacklisted addresses from smart contract...');
+      console.log('Loading blacklisted addresses from smart contract...');
       const blacklisted = [];
       
       // Check each user address for blacklist status
@@ -56,16 +56,16 @@ const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
       }
       
       setBlacklistedAddresses(blacklisted);
-      console.log(`✅ Found ${blacklisted.length} blacklisted addresses from smart contract`);
+      console.log(`Found ${blacklisted.length} blacklisted addresses from smart contract`);
       
     } catch (error) {
-      console.error('❌ Error loading blacklisted addresses from contract:', error);
+      console.error('Error loading blacklisted addresses from contract:', error);
     }
   };
 
   // Enhanced backend health check
   const checkBackendHealth = async () => {
-    console.log('🔍 Checking backend health...');
+    console.log('Checking backend health...');
     
     const urls = [API_BASE_URL, FALLBACK_API_URL];
     
@@ -81,17 +81,17 @@ const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
         
         if (response.ok) {
           const data = await response.json();
-          console.log('✅ Backend health check passed:', data);
+          console.log('Backend health check passed:', data);
           setConnectionStatus('connected');
           return;
         }
       } catch (error) {
-        console.log(`❌ Health check failed for ${baseUrl}:`, error.message);
+        console.log(`Health check failed for ${baseUrl}:`, error.message);
       }
     }
     
     setConnectionStatus('disconnected');
-    console.error('❌ All backend health checks failed');
+    console.error('All backend health checks failed');
   };
 
   const makeApiRequest = async (endpoint, options = {}) => {
@@ -100,8 +100,8 @@ const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
     for (const baseUrl of urls) {
       try {
         const url = `${baseUrl}${endpoint}`;
-        console.log(`📡 Making request to: ${url}`);
-        console.log(`📤 Request options:`, options);
+        console.log(`Making request to: ${url}`);
+        console.log(`Request options:`, options);
         
         const response = await fetch(url, {
           headers: {
@@ -111,20 +111,20 @@ const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
           ...options
         });
         
-        console.log(`📥 Response status: ${response.status}`);
+        console.log(`Response status: ${response.status}`);
         
         if (!response.ok) {
           const errorText = await response.text();
-          console.error(`❌ API Error Response:`, errorText);
+          console.error(`API Error Response:`, errorText);
           throw new Error(`HTTP ${response.status}: ${errorText}`);
         }
         
         const result = await response.json();
-        console.log(`✅ API Success Response:`, result);
+        console.log(`API Success Response:`, result);
         return result;
         
       } catch (error) {
-        console.error(`❌ Request failed for ${baseUrl}: ${error.message}`);
+        console.error(`Request failed for ${baseUrl}: ${error.message}`);
         if (urls.indexOf(baseUrl) === urls.length - 1) {
           throw error;
         }
@@ -135,19 +135,19 @@ const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
   const loadFraudData = async () => {
     try {
       setLoading(true);
-      console.log('📊 Loading fraud data...');
+      console.log('Loading fraud data...');
       
       const data = await makeApiRequest('/fraud-detection');
       
       if (data.success) {
         setFraudData(data.data);
         setLastAnalysis(data.lastAnalysis);
-        console.log('✅ Fraud data loaded successfully');
+        console.log('Fraud data loaded successfully');
       } else {
-        console.warn('⚠️ Fraud data load failed:', data.message);
+        console.warn('Fraud data load failed:', data.message);
       }
     } catch (error) {
-      console.error('❌ Error loading fraud data:', error);
+      console.error('Error loading fraud data:', error);
       setConnectionStatus('error');
     } finally {
       setLoading(false);
@@ -155,10 +155,10 @@ const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
   };
 
   const runFraudAnalysis = async () => {
-    console.log('🔍 === STARTING ENHANCED FRAUD ANALYSIS ===');
+    console.log('=== STARTING ENHANCED FRAUD ANALYSIS ===');
     
     if (!contract || !contract.address) {
-      alert('❌ Smart contract not connected');
+      alert('Smart contract not connected');
       return;
     }
 
@@ -175,7 +175,7 @@ const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
         riskThreshold: 30
       };
       
-      console.log('📤 Analysis request data:', requestData);
+      console.log('Analysis request data:', requestData);
       
       const data = await makeApiRequest('/fraud-detection/analyze', {
         method: 'POST',
@@ -183,8 +183,8 @@ const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
       });
 
       if (data.success) {
-        console.log('✅ Analysis completed successfully!');
-        console.log('📊 Analysis results:', data.data);
+        console.log('Analysis completed successfully!');
+        console.log('Analysis results:', data.data);
         
         setFraudData(data.data);
         setLastAnalysis(new Date().toISOString());
@@ -195,26 +195,26 @@ const FALLBACK_API_URL = 'https://defiapps-production.up.railway.app/api';
         const suspiciousCount = data.data.fraud_report.suspicious_addresses;
         const highRiskCount = data.data.fraud_report.high_risk_addresses;
         
-        alert(`🤖 AI Fraud Analysis Completed!
+        alert(`AI Fraud Analysis Completed!
         
-📊 Results:
-• Total addresses analyzed: ${data.data.fraud_report.total_addresses}
-• Suspicious addresses found: ${suspiciousCount}
-• High risk addresses: ${highRiskCount}
+Results:
+- Total addresses analyzed: ${data.data.fraud_report.total_addresses}
+- Suspicious addresses found: ${suspiciousCount}
+- High risk addresses: ${highRiskCount}
 
-${suspiciousCount > 0 ? '⚠️ Review the suspicious addresses below!' : '✅ No major risks detected!'}`);
+${suspiciousCount > 0 ? 'Review the suspicious addresses below!' : 'No major risks detected!'}`);
         
       } else {
-        console.error('❌ Analysis failed:', data.message);
-        alert(`❌ Analysis failed: ${data.message}`);
+        console.error('Analysis failed:', data.message);
+        alert(`Analysis failed: ${data.message}`);
         setConnectionStatus('error');
       }
       
     } catch (error) {
-      console.error('💥 Analysis error:', error);
+      console.error('Analysis error:', error);
       setConnectionStatus('error');
       
-      let errorMessage = '❌ Analysis failed: ';
+      let errorMessage = 'Analysis failed: ';
       if (error.message.includes('fetch')) {
         errorMessage += 'Cannot connect to backend server. Please check:\n';
         errorMessage += '1. Backend server is running\n';
@@ -230,104 +230,104 @@ ${suspiciousCount > 0 ? '⚠️ Review the suspicious addresses below!' : '✅ N
     }
   };
 
-// FIXED: ADD TO BLACKLIST
-const addToBlacklist = async (address, reason = 'Manual blacklist from fraud detection') => {
-  if (!contract || !isOwner) {
-    alert('❌ Only contract owner can blacklist addresses');
-    return;
-  }
-  if (!ethers.utils.isAddress(address)) {
-    alert('❌ Invalid Ethereum address');
-    return;
-  }
-
-  try {
-    setLoading(true);
-    console.log(`🚫 Blacklisting address: ${address}`);
-    
-    // 1. First, execute blockchain transaction
-    const tx = await contract.blacklistAddress(address);
-    console.log('📝 Transaction sent:', tx.hash);
-    
-    await tx.wait();
-    console.log('✅ Blockchain transaction confirmed');
-    
-    // 2. Then update backend API
-    try {
-      await makeApiRequest('/blacklist/add', {
-        method: 'POST',
-        body: JSON.stringify({ 
-          address, 
-          reason: `${reason} - Confirmed on blockchain` 
-        })
-      });
-      console.log('✅ Backend updated successfully');
-    } catch (apiError) {
-      console.warn('⚠️ Backend update failed but blockchain succeeded:', apiError);
+  // FIXED: ADD TO BLACKLIST
+  const addToBlacklist = async (address, reason = 'Manual blacklist from fraud detection') => {
+    if (!contract || !isOwner) {
+      alert('Only contract owner can blacklist addresses');
+      return;
+    }
+    if (!ethers.utils.isAddress(address)) {
+      alert('Invalid Ethereum address');
+      return;
     }
 
-    // 3. Update UI optimistically
-    setBlacklistedAddresses(prev => [...new Set([...prev, address])]);
-
-    alert(`✅ Address ${address.substring(0, 10)}... successfully blacklisted on blockchain!`);
-
-  } catch (error) {
-    console.error('❌ Error blacklisting address:', error);
-    alert(`❌ Failed to blacklist: ${error.message}`);
-  } finally {
-    setLoading(false);
-  }
-};
-
-// FIXED: REMOVE FROM BLACKLIST
-const removeFromBlacklist = async (address) => {
-  if (!contract || !isOwner) {
-    alert('❌ Only contract owner can unblacklist addresses');
-    return;
-  }
-  if (!ethers.utils.isAddress(address)) {
-    alert('❌ Invalid Ethereum address');
-    return;
-  }
-
-  try {
-    setLoading(true);
-    console.log(`✅ Starting unblacklist process for: ${address}`);
-    
-    // 1. First, execute blockchain transaction
-    const tx = await contract.unblacklistAddress(address);
-    console.log('📝 Unblacklist transaction sent:', tx.hash);
-    
-    await tx.wait();
-    console.log('✅ Blockchain transaction confirmed - address unblacklisted');
-    
-    // 2. Then update backend API
     try {
-      console.log('📡 Updating backend API...');
-      await makeApiRequest('/blacklist/remove', {
-        method: 'POST',
-        body: JSON.stringify({ address })
-      });
-      console.log('✅ Backend API updated successfully');
-    } catch (apiError) {
-      console.warn('⚠️ Backend API update failed but blockchain succeeded:', apiError);
-      // This is not critical - blockchain is the source of truth
+      setLoading(true);
+      console.log(`Blacklisting address: ${address}`);
+      
+      // 1. First, execute blockchain transaction
+      const tx = await contract.blacklistAddress(address);
+      console.log('Transaction sent:', tx.hash);
+      
+      await tx.wait();
+      console.log('Blockchain transaction confirmed');
+      
+      // 2. Then update backend API
+      try {
+        await makeApiRequest('/blacklist/add', {
+          method: 'POST',
+          body: JSON.stringify({ 
+            address, 
+            reason: `${reason} - Confirmed on blockchain` 
+          })
+        });
+        console.log('Backend updated successfully');
+      } catch (apiError) {
+        console.warn('Backend update failed but blockchain succeeded:', apiError);
+      }
+
+      // 3. Update UI optimistically
+      setBlacklistedAddresses(prev => [...new Set([...prev, address])]);
+
+      alert(`Address ${address.substring(0, 10)}... successfully blacklisted on blockchain!`);
+
+    } catch (error) {
+      console.error('Error blacklisting address:', error);
+      alert(`Failed to blacklist: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // FIXED: REMOVE FROM BLACKLIST
+  const removeFromBlacklist = async (address) => {
+    if (!contract || !isOwner) {
+      alert('Only contract owner can unblacklist addresses');
+      return;
+    }
+    if (!ethers.utils.isAddress(address)) {
+      alert('Invalid Ethereum address');
+      return;
     }
 
-    // 3. Update UI optimistically
-    setBlacklistedAddresses(prev => 
-      prev.filter(addr => addr.toLowerCase() !== address.toLowerCase())
-    );
+    try {
+      setLoading(true);
+      console.log(`Starting unblacklist process for: ${address}`);
+      
+      // 1. First, execute blockchain transaction
+      const tx = await contract.unblacklistAddress(address);
+      console.log('Unblacklist transaction sent:', tx.hash);
+      
+      await tx.wait();
+      console.log('Blockchain transaction confirmed - address unblacklisted');
+      
+      // 2. Then update backend API
+      try {
+        console.log('Updating backend API...');
+        await makeApiRequest('/blacklist/remove', {
+          method: 'POST',
+          body: JSON.stringify({ address })
+        });
+        console.log('Backend API updated successfully');
+      } catch (apiError) {
+        console.warn('Backend API update failed but blockchain succeeded:', apiError);
+        // This is not critical - blockchain is the source of truth
+      }
 
-    alert(`✅ Address ${address.substring(0, 10)}... successfully unblacklisted on blockchain!`);
+      // 3. Update UI optimistically
+      setBlacklistedAddresses(prev => 
+        prev.filter(addr => addr.toLowerCase() !== address.toLowerCase())
+      );
 
-  } catch (error) {
-    console.error('❌ Error unblacklisting address:', error);
-    alert(`❌ Failed to unblacklist: ${error.message}`);
-  } finally {
-    setLoading(false);
-  }
-};
+      alert(`Address ${address.substring(0, 10)}... successfully unblacklisted on blockchain!`);
+
+    } catch (error) {
+      console.error('Error unblacklisting address:', error);
+      alert(`Failed to unblacklist: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Enhanced risk level calculation with lower thresholds
   const getRiskLevel = (score) => {
@@ -376,15 +376,15 @@ const removeFromBlacklist = async (address) => {
   const getConnectionStatusIndicator = () => {
     switch (connectionStatus) {
       case 'connected':
-        return { icon: '🟢', text: 'Connected', className: 'status-connected' };
+        return { icon: 'Connected', text: 'Connected', className: 'status-connected' };
       case 'analyzing':
-        return { icon: '🔄', text: 'Analyzing...', className: 'status-analyzing' };
+        return { icon: 'Analyzing', text: 'Analyzing...', className: 'status-analyzing' };
       case 'disconnected':
-        return { icon: '🔴', text: 'Disconnected', className: 'status-disconnected' };
+        return { icon: 'Disconnected', text: 'Disconnected', className: 'status-disconnected' };
       case 'error':
-        return { icon: '⚠️', text: 'Error', className: 'status-error' };
+        return { icon: 'Error', text: 'Error', className: 'status-error' };
       default:
-        return { icon: '🟡', text: 'Unknown', className: 'status-unknown' };
+        return { icon: 'Unknown', text: 'Unknown', className: 'status-unknown' };
     }
   };
 
@@ -395,7 +395,7 @@ const removeFromBlacklist = async (address) => {
       {/* Enhanced Header Section */}
       <div className="fraud-header">
         <div className="fraud-header-content">
-          <h2 className="fraud-title">🤖 AI Fraud Detection System</h2>
+          <h2 className="fraud-title">AI Fraud Detection System</h2>
           <p className="fraud-subtitle">Advanced machine learning powered fraud analysis with blockchain integration</p>
           
           {/* Connection Status Indicator */}
@@ -406,7 +406,6 @@ const removeFromBlacklist = async (address) => {
           
           {/* Smart Contract Status */}
           <div className="contract-status">
-            <span className="status-icon">{contract ? '🟢' : '🔴'}</span>
             <span className="status-text">
               Contract: {contract ? 'Connected' : 'Not Connected'}
             </span>
@@ -429,7 +428,7 @@ const removeFromBlacklist = async (address) => {
                   Analyzing Smart Contract...
                 </span>
               ) : (
-                '🔍 Run Enhanced AI Analysis'
+                'Run Enhanced AI Analysis'
               )}
             </button>
             
@@ -437,7 +436,7 @@ const removeFromBlacklist = async (address) => {
               onClick={() => setShowFraudSection(!showFraudSection)}
               className="action-btn toggle-btn"
             >
-              {showFraudSection ? '📊 Hide Analysis' : '📊 Show Analysis'}
+              {showFraudSection ? 'Hide Analysis' : 'Show Analysis'}
             </button>
             
             <button
@@ -445,16 +444,14 @@ const removeFromBlacklist = async (address) => {
               className="action-btn health-check-btn"
               disabled={analyzing}
             >
-              🔍 Check Backend
+              Check Backend
             </button>
-            
-           
           </div>
           
           {lastAnalysis && (
             <div className="last-analysis">
               <span className="analysis-time">
-                🕒 Last analysis: {formatTimestamp(lastAnalysis)}
+                Last analysis: {formatTimestamp(lastAnalysis)}
               </span>
             </div>
           )}
@@ -463,7 +460,7 @@ const removeFromBlacklist = async (address) => {
           {connectionStatus === 'disconnected' && (
             <div className="connection-help">
               <div className="help-content">
-                <h4>❌ Backend Connection Failed</h4>
+                <h4>Backend Connection Failed</h4>
                 <p>Please ensure the backend server is running:</p>
                 <div className="help-commands">
                   <code>cd backend && node fraud-api-server.js</code>
@@ -480,7 +477,6 @@ const removeFromBlacklist = async (address) => {
         <div className="fraud-dashboard">
           <div className="stats-grid">
             <div className="stat-card total-addresses">
-              <div className="stat-icon">👥</div>
               <div className="stat-content">
                 <h3>Total Addresses</h3>
                 <p className="stat-number">{fraudData.fraud_report.total_addresses}</p>
@@ -489,7 +485,6 @@ const removeFromBlacklist = async (address) => {
             </div>
             
             <div className="stat-card suspicious-addresses">
-              <div className="stat-icon">⚠️</div>
               <div className="stat-content">
                 <h3>Suspicious</h3>
                 <p className="stat-number">{fraudData.fraud_report.suspicious_addresses}</p>
@@ -498,7 +493,6 @@ const removeFromBlacklist = async (address) => {
             </div>
             
             <div className="stat-card high-risk-addresses">
-              <div className="stat-icon">🚨</div>
               <div className="stat-content">
                 <h3>High Risk</h3>
                 <p className="stat-number">{fraudData.fraud_report.high_risk_addresses}</p>
@@ -507,7 +501,6 @@ const removeFromBlacklist = async (address) => {
             </div>
             
             <div className="stat-card blacklisted-addresses">
-              <div className="stat-icon">🚫</div>
               <div className="stat-content">
                 <h3>Blacklisted</h3>
                 <p className="stat-number">{blacklistedAddresses.length}</p>
@@ -526,7 +519,7 @@ const removeFromBlacklist = async (address) => {
                 className="filter-select"
               >
                 <option value="all">All Levels</option>
-                <option value="critical">Critical (≥70)</option>
+                <option value="critical">Critical (70+)</option>
                 <option value="high">High (50-69)</option>
                 <option value="medium">Medium (30-49)</option>
                 <option value="low">Low (&lt;30)</option>
@@ -551,7 +544,7 @@ const removeFromBlacklist = async (address) => {
 
           {/* Enhanced Suspicious Addresses Table */}
           <div className="suspicious-section">
-            <h3>⚠️ Suspicious Addresses Analysis</h3>
+            <h3>Suspicious Addresses Analysis</h3>
             
             {getFilteredSuspiciousAddresses().length > 0 ? (
               <div className="table-container">
@@ -586,7 +579,7 @@ const removeFromBlacklist = async (address) => {
                                 onClick={() => navigator.clipboard.writeText(addr.address)}
                                 title="Copy full address"
                               >
-                                📋
+                                Copy
                               </button>
                             </div>
                           </td>
@@ -620,7 +613,7 @@ const removeFromBlacklist = async (address) => {
                           </td>
                           <td>
                             <span className={`status-badge ${isBlacklisted ? 'blacklisted' : 'active'}`}>
-                              {isBlacklisted ? '🚫 Blacklisted' : '✅ Active'}
+                              {isBlacklisted ? 'Blacklisted' : 'Active'}
                             </span>
                           </td>
                           <td className="actions-cell">
@@ -640,7 +633,7 @@ const removeFromBlacklist = async (address) => {
                                 disabled={loading || !isOwner}
                                 title={!isOwner ? 'Only contract owner can blacklist' : 'Blacklist address on blockchain'}
                               >
-                                {loading ? 'Processing...' : ' Block'}
+                                {loading ? 'Processing...' : 'Block'}
                               </button>
                             )}
                           </td>
@@ -652,9 +645,6 @@ const removeFromBlacklist = async (address) => {
               </div>
             ) : (
               <div className="no-data">
-                <div className="no-data-icon">
-                  {fraudData.fraud_report.suspicious_list.length === 0 ? '🎉' : '🔍'}
-                </div>
                 <p>
                   {fraudData.fraud_report.suspicious_list.length === 0 
                     ? 'No suspicious addresses found! Your contract looks clean.' 
@@ -677,12 +667,12 @@ const removeFromBlacklist = async (address) => {
 
           {/* Enhanced Transaction Patterns */}
           <div className="patterns-section">
-            <h3>📊 Transaction Patterns Analysis</h3>
+            <h3>Transaction Patterns Analysis</h3>
             
             <div className="patterns-grid">
               {/* Hourly Distribution */}
               <div className="pattern-card">
-                <h4>⏰ Hourly Distribution</h4>
+                <h4>Hourly Distribution</h4>
                 <div className="pattern-chart">
                   {fraudData.patterns.hourly_distribution && 
                     getPatternChartData(
@@ -703,13 +693,13 @@ const removeFromBlacklist = async (address) => {
                   }
                 </div>
                 <div className="pattern-insights">
-                  <p>🌙 Night hours (22:00-06:00) activity may indicate automated behavior</p>
+                  <p>Night hours (22:00-06:00) activity may indicate automated behavior</p>
                 </div>
               </div>
 
               {/* Transaction Types */}
               <div className="pattern-card">
-                <h4>📈 Transaction Types</h4>
+                <h4>Transaction Types</h4>
                 <div className="pattern-chart">
                   {fraudData.patterns.transaction_types &&
                     getPatternChartData(
@@ -730,13 +720,11 @@ const removeFromBlacklist = async (address) => {
                   }
                 </div>
                 <div className="pattern-insights">
-                  <p>📊 High loan_taken vs loan_repaid ratio may indicate risk</p>
+                  <p>High loan_taken vs loan_repaid ratio may indicate risk</p>
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Enhanced Manual Blacklist Management - REMOVED */}
         </div>
       )}
 
@@ -755,4 +743,3 @@ const removeFromBlacklist = async (address) => {
 
 
 export default FraudDetection;
-
